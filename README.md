@@ -3,6 +3,8 @@
 Given a valid Heroku potgresql connection string this code will create the expected connection string to be used inside .net core 2.0 applications.
 
 ## How to use it
+Install the package from here: https://www.nuget.org/packages/HerokuPGParser/
+
 Inside your .net core 2.0 Startup.cs class in ConfigureServices method add:
 
 ```
