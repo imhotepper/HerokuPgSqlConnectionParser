@@ -14,4 +14,4 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
-      run: dotnet build --configuration Release && dotnet nuget push "bin/Release/HerokuPgSqlConnectionParser.1.0.0.nupkg" --source "github"
+      run: dotnet build --configuration Release && dotnet nuget push "bin/Release/HerokuPgSqlConnectionParser.1.0.0.nupkg" 
