@@ -7,20 +7,32 @@ namespace HerokuPGParser
     {
         public static string BuildExpectedConnectionString(string herokuPGConnectionString)
         {
-            Uri url;
+            Uri uri;
             var connectionUrl = "";
-            bool isUrl = Uri.TryCreate(herokuPGConnectionString, UriKind.Absolute, out url);
-            if (isUrl && 
-                !string.IsNullOrEmpty( url.UserInfo) &&
-                url.UserInfo.Split(':').Length > 1)
-                connectionUrl = $"host={url.Host};username={url.UserInfo.Split(':')[0]};password={url.UserInfo.Split(':')[1]};database={url.LocalPath.Substring(1)};pooling=true;";
+            bool isUrl = Uri.TryCreate(herokuPGConnectionString, UriKind.Absolute, out uri);
+            Console.WriteLine("Is URI ? -> "+ isUrl);
+            if (isUrl &&
+                !string.IsNullOrEmpty(uri.UserInfo) &&
+                uri.UserInfo.Split(':').Length > 1)
+            {
+                // connectionUrl = $"host={url.Host};username={url.UserInfo.Split(':')[0]};password={url.UserInfo.Split(':')[1]};database={url.LocalPath.Substring(1)};pooling=true;";
+                var username = uri.UserInfo.Split(':')[0];
+                var password = uri.UserInfo.Split(':')[1];
+                connectionUrl =
+              "host=" + uri.Host +
+               "; Database=" + uri.AbsolutePath.Substring(1) +
+               "; Username=" + username +
+               "; Password=" + password +
+               "; Port=" + uri.Port +
+               "; SSL Mode=Require; Trust Server Certificate=true;";
+            }
             else
             {
                 var msg = $"ERROR: Invalid PG Connection string : '<<{herokuPGConnectionString}>>'";
                 Trace.TraceWarning(msg);
                 Console.WriteLine(msg);
             }
-            
+
             return connectionUrl;
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using HerokuPGParser;
 using Xunit;
 using Xunit.Sdk;
@@ -37,14 +38,36 @@ namespace Tests
         [Fact]
         public void Can_Parse_Valid_PG_Con_String()
         {
+
             var pgConStr = "postgres://user:password@host:1234/DATABASE";
             var conStr = ConnectionHelper.BuildExpectedConnectionString(pgConStr);
 
             Assert.NotEmpty(conStr);
             Assert.Contains("host", conStr);
-            Assert.Contains("username", conStr);
-            Assert.Contains("password", conStr);
-            Assert.Contains("database", conStr);
+            Assert.Contains("Username", conStr);
+            Assert.Contains("Password", conStr);
+            Assert.Contains("Database", conStr);
+        }
+
+         [Fact]
+        public void Can_Parse_NEW_Valid_PG_Con_String()
+        {
+
+            var pgConStr = "postgres://user:password@host:1234/DATABASE";
+         
+            Uri url;
+            
+            bool isUrl = Uri.TryCreate(pgConStr, UriKind.Absolute, out url);
+            
+            Debug.Print("is url: " + isUrl);;
+
+            var conStr = ConnectionHelper.BuildExpectedConnectionString(pgConStr);
+
+            Assert.NotEmpty(conStr);
+            Assert.Contains("host", conStr,StringComparison.InvariantCultureIgnoreCase);
+            Assert.Contains("username", conStr,StringComparison.InvariantCultureIgnoreCase);
+            Assert.Contains("password", conStr,StringComparison.InvariantCultureIgnoreCase);
+            Assert.Contains("database", conStr,StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }
