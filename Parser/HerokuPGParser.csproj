@@ -4,6 +4,8 @@
     <AssemblyVersion>1.0.3</AssemblyVersion>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <LangVersion>8</LangVersion>
+    <PackageVersion>1.0.3</PackageVersion>
+    <FileVersion>1.0.3</FileVersion>
   </PropertyGroup>
 
 </Project>
