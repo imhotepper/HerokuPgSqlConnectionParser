@@ -23,8 +23,10 @@ namespace HerokuPGParser
                "; Database=" + uri.AbsolutePath.Substring(1) +
                "; Username=" + username +
                "; Password=" + password +
-               "; Port=" + uri.Port +
-               "; SSL Mode=Require; Trust Server Certificate=true;";
+              "; SSL Mode=Require; Trust Server Certificate=true;";
+
+                if (uri.Port > 0)
+                    connectionUrl += $" ; Port= {uri.Port} ";
             }
             else
             {

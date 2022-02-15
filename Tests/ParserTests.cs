@@ -68,6 +68,31 @@ namespace Tests
             Assert.Contains("username", conStr,StringComparison.InvariantCultureIgnoreCase);
             Assert.Contains("password", conStr,StringComparison.InvariantCultureIgnoreCase);
             Assert.Contains("database", conStr,StringComparison.InvariantCultureIgnoreCase);
+            Assert.Contains("port", conStr,StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        [Fact]
+        public void Can_parse_elephant_sql_conn_str()
+        {
+            var elephantSqlConnStr = "postgres://usr:something@server.com/db";
+            
+            var conStr = ConnectionHelper.BuildExpectedConnectionString(elephantSqlConnStr);
+
+            Assert.NotEmpty(conStr);
+
+        }
+
+        [Fact]
+        public void Can_parse_elephant_without_port()
+        {
+            var elephantSqlConnStr = "postgres://usr:something@server.com/db";
+            
+            var conStr = ConnectionHelper.BuildExpectedConnectionString(elephantSqlConnStr);
+
+            Assert.NotEmpty(conStr);
+            
+            Assert.DoesNotContain("port",conStr);
+
         }
     }
 }
