@@ -8,8 +8,7 @@ Install the package from here: https://www.nuget.org/packages/HerokuPGParser/
 Inside your .net core 2.0 Startup.cs class in ConfigureServices method add:
 
 ```
-var conStr = Configuration.GetConnectionString("DefaultConnection");
-var pgConn = Environment.GetEnvironmentVariable("DATABASE_URL");
+var pgConn = Environment.GetEnvironmentVariable("DefaultConnection");
 
 if (!string.IsNullOrWhiteSpace(pgConn))
     conStr = HerokuPGParser.ConnectionHelper.BuildExpectedConnectionString(pgConn);
